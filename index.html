@@ -1,28 +1,126 @@
 <!DOCTYPE html>
+<!-- <meta http-equiv="refresh" content="5" > -->
 <html>
 <head>
 <title>Page Title</title>
 <script src="https://sdk.amazonaws.com/js/aws-sdk-2.2.42.min.js"></script>
+<style>
+  .logo {
+    /*position:absolute;*/
+    /*z-index: -100;*/
+  }
+  .header {
+    padding-left:10px;
+    padding-right:10px;
+  }
+  .headerImg {
+    width:450px;
+    margin-left: auto;
+    margin-right: auto;
+    
+  }
+
+  .hr1 {
+    height:2px;
+    width:100%;
+    background-color:#6cb0d2;
+    margin-bottom:4px;
+  }
+
+  .hr2 {
+    height:6px;
+    width:100%;
+    background-color:#6cb0d2;
+    margin-bottom:6px;
+  }
+
+
+  .photos {
+    display:flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    justify-content: center;
+    align-content: flex-start;
+    align-items: flex-start;
+
+    padding-left:10px;
+    padding-right:10px;
+  }
+  .photo {
+    margin:1px;
+  }
+</style>
 </head>
 <body>
+  <img src="images/C1-Logo.png" class="logo" alt="">
+  
+  
 
+  <div class="header">
+    <div class="headerImg">
+      <img src="images/Header-Image.png" alt="">      
+    </div>
+
+
+    <div class="hr1"></div>
+    <div class="hr2"></div>
+  </div>
+  <div id="gallery" class="photos">
+    
+  </div>
 <ul id="objects"></ul>
 
 <script type="text/javascript">
-  // AWS.config.credentials = AWS.config.update({accessKeyId: 'AKIAJMSZ2RX2EK2RNJWQ', secretAccessKey: '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'});
-  var bucket = new AWS.S3({params: {Bucket: 'chaiparty'}});
+  var currentETags = [];
+  var bucket = new AWS.S3({params: {Bucket: 'marketing-gifbomb'}});
+
   AWS.config.credentials = bucket.config.update({accessKeyId: 'AKIAJMSZ2RX2EK2RNJWQ', secretAccessKey: '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'});
   bucket.listObjects(function (err, data) {
+    console.log(data);
     if (err) {
         console.log(err);
         console.log(data);
     } else {
-      for (var i = 0; i < data.Contents.length; i++) {
-        document.getElementById('objects').innerHTML +=
-          '<img style="width:200px;" src=https://s3.amazonaws.com/chaiparty/' + data.Contents[i].Key + '></img>';
+      // var currentDocs = data.Contents.map.;
+      var imageLoadCount = Math.min(data.Contents.length,20);
+      for (var i = data.Contents.length-1; i >= data.Contents.length-imageLoadCount; i--) {
+        var image = data.Contents[i];
+        console.log("https://s3.amazonaws.com/marketing-gifbomb/" + image.Key);
+        currentETags = currentETags.push(image.ETag);
+        console.log('etag:',image.ETag);
+        document.getElementById('gallery').innerHTML +=
+          '<img class="photo" style="width:200px;" src="https://s3.amazonaws.com/marketing-gifbomb/' + data.Contents[i].Key + '"></img>';
+          document.getElementById('gallery').innerHTML +=
+          '<img class="photo" style="width:200px;" src="https://s3.amazonaws.com/marketing-gifbomb/' + data.Contents[i].Key + '"></img>';
+          document.getElementById('gallery').innerHTML +=
+          '<img class="photo" style="width:200px;" src="https://s3.amazonaws.com/marketing-gifbomb/' + data.Contents[i].Key + '"></img>';
+          document.getElementById('gallery').innerHTML +=
+          '<img class="photo" style="width:200px;" src="https://s3.amazonaws.com/marketing-gifbomb/' + data.Contents[i].Key + '"></img>';
+          document.getElementById('gallery').innerHTML +=
+          '<img class="photo" style="width:200px;" src="https://s3.amazonaws.com/marketing-gifbomb/' + data.Contents[i].Key + '"></img>';
+          document.getElementById('gallery').innerHTML +=
+          '<img class="photo" style="width:200px;" src="https://s3.amazonaws.com/marketing-gifbomb/' + data.Contents[i].Key + '"></img>';
+          document.getElementById('gallery').innerHTML +=
+          '<img class="photo" style="width:200px;" src="https://s3.amazonaws.com/marketing-gifbomb/' + data.Contents[i].Key + '"></img>';
+          document.getElementById('gallery').innerHTML +=
+          '<img class="photo" style="width:200px;" src="https://s3.amazonaws.com/marketing-gifbomb/' + data.Contents[i].Key + '"></img>';
       }
+      
+      console.log(currentETags);
+      console.log(currentETags[0]);
     }
   });
+
+
+  var timeout = setInterval(dance,20000);
+  function dance(){
+    console.log('dance');
+    bucket.listObjects(function (err, data) {
+      console.log('loaded',data);
+    });
+  }
+
 </script>
 </body>
 </html>
+
