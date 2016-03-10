@@ -2,65 +2,19 @@
 <!-- <meta http-equiv="refresh" content="5" > -->
 <html>
 <head>
-<title>Page Title</title>
-<script src="https://sdk.amazonaws.com/js/aws-sdk-2.2.42.min.js"></script>
-<style>
-  .logo {
-    /*position:absolute;*/
-    /*z-index: -100;*/
-  }
-  .header {
-    padding-left:10px;
-    padding-right:10px;
-  }
-  .headerImg {
-    width:450px;
-    margin-left: auto;
-    margin-right: auto;
-    
-  }
-
-  .hr1 {
-    height:2px;
-    width:100%;
-    background-color:#6cb0d2;
-    margin-bottom:4px;
-  }
-
-  .hr2 {
-    height:6px;
-    width:100%;
-    background-color:#6cb0d2;
-    margin-bottom:6px;
-  }
-
-
-  .photos {
-    display:flex;
-    flex-direction: row;
-    flex-wrap: wrap;
-    justify-content: center;
-    align-content: flex-start;
-    align-items: flex-start;
-
-    padding-left:10px;
-    padding-right:10px;
-  }
-  .photo {
-    margin:1px;
-  }
-</style>
+  <title>Page Title</title>
+  <link rel="stylesheet" href="css/styles.css">
+  <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.7.2/jquery.min.js"></script>
+  <script type="text/javascript" src="http://www.parsecdn.com/js/parse-latest.js"></script>
 </head>
+
 <body>
   <img src="images/C1-Logo.png" class="logo" alt="">
-  
-  
 
   <div class="header">
     <div class="headerImg">
       <img src="images/Header-Image.png" alt="">      
     </div>
-
 
     <div class="hr1"></div>
     <div class="hr2"></div>
@@ -68,59 +22,111 @@
   <div id="gallery" class="photos">
     
   </div>
-<ul id="objects"></ul>
 
-<script type="text/javascript">
-  var currentETags = [];
-  var bucket = new AWS.S3({params: {Bucket: 'marketing-gifbomb'}});
+  <script type="text/javascript">
+    Parse.initialize("iB2vRc9kAu3qgdvmfMfwgNcns5tnPqMNZqEli6om",
+                     "jhDM78h8afoa5lIBgHkvleovABpOEzvLWxdGpiCA");
+    
 
-  AWS.config.credentials = bucket.config.update({accessKeyId: 'AKIAJMSZ2RX2EK2RNJWQ', secretAccessKey: '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'});
-  bucket.listObjects(function (err, data) {
-    console.log(data);
-    if (err) {
-        console.log(err);
-        console.log(data);
-    } else {
-      // var currentDocs = data.Contents.map.;
-      var imageLoadCount = Math.min(data.Contents.length,20);
-      for (var i = data.Contents.length-1; i >= data.Contents.length-imageLoadCount; i--) {
-        var image = data.Contents[i];
-        console.log("https://s3.amazonaws.com/marketing-gifbomb/" + image.Key);
-        currentETags = currentETags.push(image.ETag);
-        console.log('etag:',image.ETag);
-        document.getElementById('gallery').innerHTML +=
-          '<img class="photo" style="width:200px;" src="https://s3.amazonaws.com/marketing-gifbomb/' + data.Contents[i].Key + '"></img>';
-          document.getElementById('gallery').innerHTML +=
-          '<img class="photo" style="width:200px;" src="https://s3.amazonaws.com/marketing-gifbomb/' + data.Contents[i].Key + '"></img>';
-          document.getElementById('gallery').innerHTML +=
-          '<img class="photo" style="width:200px;" src="https://s3.amazonaws.com/marketing-gifbomb/' + data.Contents[i].Key + '"></img>';
-          document.getElementById('gallery').innerHTML +=
-          '<img class="photo" style="width:200px;" src="https://s3.amazonaws.com/marketing-gifbomb/' + data.Contents[i].Key + '"></img>';
-          document.getElementById('gallery').innerHTML +=
-          '<img class="photo" style="width:200px;" src="https://s3.amazonaws.com/marketing-gifbomb/' + data.Contents[i].Key + '"></img>';
-          document.getElementById('gallery').innerHTML +=
-          '<img class="photo" style="width:200px;" src="https://s3.amazonaws.com/marketing-gifbomb/' + data.Contents[i].Key + '"></img>';
-          document.getElementById('gallery').innerHTML +=
-          '<img class="photo" style="width:200px;" src="https://s3.amazonaws.com/marketing-gifbomb/' + data.Contents[i].Key + '"></img>';
-          document.getElementById('gallery').innerHTML +=
-          '<img class="photo" style="width:200px;" src="https://s3.amazonaws.com/marketing-gifbomb/' + data.Contents[i].Key + '"></img>';
+
+
+    var GameScore = Parse.Object.extend("GIF");
+    var query = new Parse.Query(GameScore);
+    query.find({
+        success:function(items){
+            console.log(items);
+            $.each(items,function(i,item){
+              console.log(item['attributes']['gif']['_url']);
+              console.log(item.attributes.gif._url);
+              document.getElementById('gallery').innerHTML +=
+                '<img class="photo" style="width:200px;" src="' + item.attributes.gif._url + '"></img>';
+            });
+        //     $.each(items,function(i,item){
+        //     alert(i+":"+JSON.stringify(item));});
+        // }
       }
-      
-      console.log(currentETags);
-      console.log(currentETags[0]);
-    }
-  });
-
-
-  var timeout = setInterval(dance,20000);
-  function dance(){
-    console.log('dance');
-    bucket.listObjects(function (err, data) {
-      console.log('loaded',data);
     });
-  }
 
-</script>
+
+
+    // query.get("gif", {
+    //   success: function(gameScore) {
+    //     // The object was retrieved successfully.
+    //     console.log('sussess');
+    //   },
+    //   error: function(object, error) {
+    //     console.log('error');
+    //     console.log(object);
+    //     console.log(error);
+    //     // The object was not retrieved successfully.
+    //     // error is a Parse.Error with an error code and message.
+    //   }
+    // });
+
+
+    // var TestObject = Parse.Object.extend("TestObject");
+    // var testObject = new TestObject();
+    //   testObject.save({foo: "bar"}, {
+    //   success: function(object) {
+
+    //     $(".success").show();
+    //   },
+    //   error: function(model, error) {
+    //     $(".error").show();
+    //   }
+    // });
+  </script>
+  <script type="text/javascript">
+  //   var currentETags = [];
+  //   var bucket = new AWS.S3({params: {Bucket: 'marketing-gifbomb'}});
+
+  //   AWS.config.credentials = bucket.config.update({accessKeyId: 'AKIAJMSZ2RX2EK2RNJWQ', secretAccessKey: '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'});
+  //   bucket.listObjects(function (err, data) {
+  //     console.log(data);
+  //     if (err) {
+  //         console.log(err);
+  //         console.log(data);
+  //     } else {
+  //       // var currentDocs = data.Contents.map.;
+  //       var imageLoadCount = Math.min(data.Contents.length,20);
+  //       for (var i = data.Contents.length-1; i >= data.Contents.length-imageLoadCount; i--) {
+  //         var image = data.Contents[i];
+  //         console.log("https://s3.amazonaws.com/marketing-gifbomb/" + image.Key);
+  //         currentETags = currentETags.push(image.ETag);
+  //         console.log('etag:',image.ETag);
+  //         document.getElementById('gallery').innerHTML +=
+  //           '<img class="photo" style="width:200px;" src="https://s3.amazonaws.com/marketing-gifbomb/' + data.Contents[i].Key + '"></img>';
+  //           document.getElementById('gallery').innerHTML +=
+  //           '<img class="photo" style="width:200px;" src="https://s3.amazonaws.com/marketing-gifbomb/' + data.Contents[i].Key + '"></img>';
+  //           document.getElementById('gallery').innerHTML +=
+  //           '<img class="photo" style="width:200px;" src="https://s3.amazonaws.com/marketing-gifbomb/' + data.Contents[i].Key + '"></img>';
+  //           document.getElementById('gallery').innerHTML +=
+  //           '<img class="photo" style="width:200px;" src="https://s3.amazonaws.com/marketing-gifbomb/' + data.Contents[i].Key + '"></img>';
+  //           document.getElementById('gallery').innerHTML +=
+  //           '<img class="photo" style="width:200px;" src="https://s3.amazonaws.com/marketing-gifbomb/' + data.Contents[i].Key + '"></img>';
+  //           document.getElementById('gallery').innerHTML +=
+  //           '<img class="photo" style="width:200px;" src="https://s3.amazonaws.com/marketing-gifbomb/' + data.Contents[i].Key + '"></img>';
+  //           document.getElementById('gallery').innerHTML +=
+  //           '<img class="photo" style="width:200px;" src="https://s3.amazonaws.com/marketing-gifbomb/' + data.Contents[i].Key + '"></img>';
+  //           document.getElementById('gallery').innerHTML +=
+  //           '<img class="photo" style="width:200px;" src="https://s3.amazonaws.com/marketing-gifbomb/' + data.Contents[i].Key + '"></img>';
+  //       }
+        
+  //       console.log(currentETags);
+  //       console.log(currentETags[0]);
+  //     }
+  //   });
+
+
+  //   var timeout = setInterval(dance,20000);
+  //   function dance(){
+  //     console.log('dance');
+  //     bucket.listObjects(function (err, data) {
+  //       console.log('loaded',data);
+  //     });
+  //   }
+
+  // </script>
 </body>
 </html>
 
