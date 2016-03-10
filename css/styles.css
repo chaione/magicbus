@@ -7,10 +7,10 @@
       padding-right:10px;
     }
     .headerImg {
-      width:450px;
+      width:680px;
       margin-left: auto;
       margin-right: auto;
-      
+      padding-bottom: 10px;
     }
 
     .hr1 {
@@ -24,7 +24,7 @@
       height:6px;
       width:100%;
       background-color:#6cb0d2;
-      margin-bottom:6px;
+      margin-bottom:38px;
     }
 
 
