@@ -50,7 +50,6 @@
 
    var timeout = setInterval(dance,5000);
     function dance(){
-      console.log('refresh');
       query.find({
         success:function(photos){
             var imageLoadCount = Math.min(photos.length,27);
