@@ -1,0 +1,44 @@
+.logo {
+      /*position:absolute;*/
+      /*z-index: -100;*/
+    }
+    .header {
+      padding-left:10px;
+      padding-right:10px;
+    }
+    .headerImg {
+      width:450px;
+      margin-left: auto;
+      margin-right: auto;
+      
+    }
+
+    .hr1 {
+      height:2px;
+      width:100%;
+      background-color:#6cb0d2;
+      margin-bottom:4px;
+    }
+
+    .hr2 {
+      height:6px;
+      width:100%;
+      background-color:#6cb0d2;
+      margin-bottom:6px;
+    }
+
+
+    .photos {
+      display:flex;
+      flex-direction: row;
+      flex-wrap: wrap;
+      justify-content: center;
+      align-content: flex-start;
+      align-items: flex-start;
+
+      padding-left:10px;
+      padding-right:10px;
+    }
+    .photo {
+      margin:1px;
+    }
