@@ -28,21 +28,27 @@
                      "jhDM78h8afoa5lIBgHkvleovABpOEzvLWxdGpiCA");
     
 
-
+    // console.log(typeof window.orientation);
     var currentPhotos = [];
+    // if(typeof window.orientation !== 'undefined')
+    // {
+    //   isMobile = true;
+    // }
+   
+    var mobileWidth = 100;
 
     var GameScore = Parse.Object.extend("GIF");
     var query = new Parse.Query(GameScore);
     query.find({
         success:function(photos){
-            var imageLoadCount = Math.min(photos.length,27);
+            var imageLoadCount = Math.min(photos.length,12);
 
             for (var i = photos.length-1; i >= photos.length-imageLoadCount; i--) {
               var photo = photos[i];
               currentPhotos.push(photo.id);
 
               document.getElementById('gallery').innerHTML +=
-                '<img class="photo" style="width:200px;" src="' + photo.attributes.gif._url + '"></img>';
+                '<img class="photo" src="' + photo.attributes.gif._url + '"></img>';
             };
 
       }
@@ -52,7 +58,7 @@
     function dance(){
       query.find({
         success:function(photos){
-            var imageLoadCount = Math.min(photos.length,27);
+            var imageLoadCount = Math.min(photos.length,12);
             for (var i = photos.length-1; i >= photos.length-imageLoadCount; i--) {
               var photo = photos[i];
 
@@ -60,7 +66,7 @@
                 currentPhotos.push(photo.id);
 
                 document.getElementById('gallery').innerHTML =
-                  '<img class="photo" style="width:200px;" src="' + photo.attributes.gif._url + '"></img>' + document.getElementById('gallery').innerHTML;
+                  '<img class="photo" src="' + photo.attributes.gif._url + '"></img>' + document.getElementById('gallery').innerHTML;
               }
             }
         }
