@@ -36,9 +36,10 @@ console.log('hi');
     query.find({
         success:function(items){
             console.log(items);
+            // for (var i = Things.length; i < ; i++) {
+            //   Things[i]
+            // };
             $.each(items,function(i,item){
-              console.log(item['attributes']['gif']['_url']);
-              console.log(item.attributes.gif._url);
               document.getElementById('gallery').innerHTML +=
                 '<img class="photo" style="width:200px;" src="' + item.attributes.gif._url + '"></img>';
             });
