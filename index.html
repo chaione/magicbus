@@ -3,36 +3,20 @@
 <head>
 <title>Page Title</title>
 <script src="https://sdk.amazonaws.com/js/aws-sdk-2.2.42.min.js"></script>
-<script type="text/javascript">
-  // See the Configuring section to configure credentials in the SDK
-  // AWS.config.credentials = AWS.config.update({accessKeyId: 'AKIAJMSZ2RX2EK2RNJWQ', secretAccessKey: 'T1b+aiFvNmuNyjoQB0qBx/etgtYvCI4Le7eoVEZJ'});
-
-
-  // Configure your region
-  // AWS.config.region = 'us-west-2';
-</script>
 </head>
 <body>
 
-<h1>My First Heading</h1>
-<p>My first stuffs.</p>
-<div id="status"></div>
 <ul id="objects"></ul>
 
 <script type="text/javascript">
   // AWS.config.credentials = AWS.config.update({accessKeyId: 'AKIAJMSZ2RX2EK2RNJWQ', secretAccessKey: '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'});
   var bucket = new AWS.S3({params: {Bucket: 'chaiparty'}});
   AWS.config.credentials = bucket.config.update({accessKeyId: 'AKIAJMSZ2RX2EK2RNJWQ', secretAccessKey: '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'});
-  console.log(AWS.config.credentials);
   bucket.listObjects(function (err, data) {
     if (err) {
         console.log(err);
         console.log(data);
-      document.getElementById('status').innerHTML =
-        'Could not load objects from S3';
     } else {
-      document.getElementById('status').innerHTML =
-        'Loaded ' + data.Contents.length + ' items from S3';
       for (var i = 0; i < data.Contents.length; i++) {
         document.getElementById('objects').innerHTML +=
           '<img style="width:200px;" src=https://s3.amazonaws.com/chaiparty/' + data.Contents[i].Key + '></img>';
@@ -42,22 +26,3 @@
 </script>
 </body>
 </html>
-
-<!-- <?xml version="1.0" encoding="UTF-8"?>
-<CORSConfiguration xmlns="http://s3.amazonaws.com/doc/2006-03-01/">
-    <CORSRule>
-        <AllowedOrigin>*</AllowedOrigin>
-        <AllowedMethod>GET</AllowedMethod>
-        <AllowedHeader>*</AllowedHeader>
-    </CORSRule>
-</CORSConfiguration>
- -->
-
- <!-- <CORSConfiguration>
-    <CORSRule>
-        <AllowedOrigin>*</AllowedOrigin>
-        <AllowedMethod>GET</AllowedMethod>
-        <MaxAgeSeconds>3000</MaxAgeSeconds>
-        <AllowedHeader>Authorization</AllowedHeader>
-    </CORSRule>
- -->
