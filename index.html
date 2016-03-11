@@ -40,7 +40,7 @@
 
     var GameScore = Parse.Object.extend("GIF");
     var query = new Parse.Query(GameScore);
-    query.find({
+    query.limit(1000).find({
         success:function(photos){
             var imageLoadCount = Math.min(photos.length,12);
 
@@ -57,7 +57,7 @@
 
    var timeout = setInterval(dance,5000);
     function dance(){
-      query.find({
+      query.limit(1000).find({
         success:function(photos){
             var imageLoadCount = Math.min(photos.length,12);
             for (var i = photos.length-1; i >= photos.length-imageLoadCount; i--) {
