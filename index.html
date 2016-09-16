@@ -5,76 +5,43 @@
   <title>ChaiOne - SXSW - Archived</title>
   <link rel="shortcut icon" href="images/favicon.ico">
   <link rel="stylesheet" href="css/styles.css">
+  <!-- Latest compiled and minified CSS & JS -->
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" integrity="sha384-1q8mTJOASx8j1Au+a5WDVnPi2lkFfwwEAa8hDDdjZlpLegxhjVME1fgjWPGmkzs7" crossorigin="anonymous">
+  <script src="//code.jquery.com/jquery.js"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js" integrity="sha384-0mSbJDEHialfmuBBQP6A4Qrprq5OVfW37PRR3j5ELqxss1yVqOtnepnHVP9aJ7xS" crossorigin="anonymous"></script>
+
   <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.7.2/jquery.min.js"></script>
-  <script type="text/javascript" src="http://www.parsecdn.com/js/parse-latest.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/3.4.0/firebase.js"></script>
+  <script>
+    // Initialize Firebase
+    var config = {
+      apiKey: "AIzaSyCMjZNiJEqDN9unB7Yw4GcDalVCFg0Dy7E",
+      authDomain: "gifbomb-89b2c.firebaseapp.com",
+      databaseURL: "https://gifbomb-89b2c.firebaseio.com",
+      storageBucket: "gifbomb-89b2c.appspot.com",
+      messagingSenderId: "620555395295"
+    };
+    firebase.initializeApp(config);
+  </script>
 </head>
 
 <body>
   <!-- <img src="images/C1-Logo.png" class="logo" alt=""> -->
-
-  <div class="header">
-    <div class="headerImg">
-      <img src="images/Header-Image.png" alt="">      
+  <div class="row">
+    <div class="col-xs-12">
+        <img class="image-responsive center-block" src="images/Header-Image-new.png" alt="">
+        <div class="hr1"></div>
+        <div class="hr2"></div>
     </div>
+    <!-- <div class="header">
 
-    <div class="hr1"></div>
-    <div class="hr2"></div>
+
+
+    </div> -->
   </div>
-  <div id="gallery" class="photos">
-    
-  </div>
 
-  <script type="text/javascript">
-    Parse.initialize("iB2vRc9kAu3qgdvmfMfwgNcns5tnPqMNZqEli6om",
-                     "jhDM78h8afoa5lIBgHkvleovABpOEzvLWxdGpiCA");
-    
-
-    // console.log(typeof window.orientation);
-    var currentPhotos = [];
-    // if(typeof window.orientation !== 'undefined')
-    // {
-    //   isMobile = true;
-    // }
-   
-    var mobileWidth = 100;
-
-    var GameScore = Parse.Object.extend("GIF");
-    var query = new Parse.Query(GameScore);
-    query.limit(1000).find({
-        success:function(photos){
-            var imageLoadCount = Math.min(photos.length,12);
-
-            for (var i = photos.length-1; i >= photos.length-imageLoadCount; i--) {
-              var photo = photos[i];
-              currentPhotos.push(photo.id);
-
-              document.getElementById('gallery').innerHTML +=
-                '<img class="photo" src="' + photo.attributes.gif._url + '"></img>';
-            };
-
-      }
-    });
-
-   var timeout = setInterval(dance,5000);
-    function dance(){
-      query.limit(1000).find({
-        success:function(photos){
-            var imageLoadCount = Math.min(photos.length,12);
-            for (var i = photos.length-1; i >= photos.length-imageLoadCount; i--) {
-              var photo = photos[i];
-
-              if($.inArray(photo.id, currentPhotos) === -1){
-                currentPhotos.push(photo.id);
-
-                document.getElementById('gallery').innerHTML =
-                  '<img class="photo" src="' + photo.attributes.gif._url + '"></img>' + document.getElementById('gallery').innerHTML;
-              }
-            }
-        }
-     });
-  }
-  </script>
- 
+  <div id="gallery" class="photos"></div>
+  <script type="text/javascript" src="js/main.js"></script>
 </body>
 </html>
 
