@@ -7,25 +7,15 @@
 
     // Get a reference to the database service
     var database = firebase.database();
-    var recentPostsRef = database.ref('images').limitToLast(100);
+    var recentPostsRef = database.ref('images');
     recentPostsRef.on('value', function(snapshot) {
       var images = snapshot.val();
       document.getElementById('gallery').innerHTML = "";
       for (var key in images) {
-          // skip loop if the property is from prototype
-          if (!images.hasOwnProperty(key)) continue;
 
-          var obj = images[key];
-          for (var prop in obj) {
-              // skip loop if the property is from prototype
-              if(!obj.hasOwnProperty(prop)) continue;
+          var imageUrl = images[key].imageUrl;
 
-
-              storageRef.child('images/'+obj[prop]+'.gif').getDownloadURL().then(function(url) {
-                document.getElementById('gallery').innerHTML +=
-                                  '<img class="photo" src="' + url + '"></img>';
-              }).catch(function(error) {});
-          }
+          document.getElementById('gallery').innerHTML = '<img class="photo" src="' + imageUrl + '"></img>' + document.getElementById('gallery').innerHTML;
       }
     });
 })()

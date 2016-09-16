@@ -1,11 +1,4 @@
-.logo {
-  /*position:absolute;*/
-  /*z-index: -100;*/
-}
-.header {
-  padding-left:10px;
-  padding-right:10px;
-}
+
 .headerImg {
   width:680px;
   margin-left: auto;
@@ -29,17 +22,14 @@
 
 
 .photos {
-  display:flex;
-  flex-direction: row;
-  flex-wrap: wrap;
-  justify-content: center;
-  align-content: flex-start;
-  align-items: flex-start;
+  // display:flex;
+  // flex-direction: row;
+  // flex-wrap: wrap;
+  // justify-content: center;
+  // align-content: flex-start;
+  // align-items: flex-start;
 
-  padding-left:10px;
-  padding-right:10px;
+  // margin-left:40px;
+  // margin-right:40px;
 }
-.photo {
-  margin:1px;
-  width:300px;
-}
+
