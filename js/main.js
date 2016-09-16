@@ -15,7 +15,7 @@
 
           var imageUrl = images[key].imageUrl;
 
-          document.getElementById('gallery').innerHTML = '<img class="photo" src="' + imageUrl + '"></img>' + document.getElementById('gallery').innerHTML;
+          document.getElementById('gallery').innerHTML = '<div class="col-xs-2"><div class="thumbnail"><img class="photo" src="' + imageUrl + '"></img></div></div>' + document.getElementById('gallery').innerHTML;
       }
     });
 })()
